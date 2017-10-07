@@ -1,0 +1,47 @@
+<!DOCTYPE sqlMap PUBLIC
+        "-//iBATIS.com//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Client">
+
+    <resultMap id="clientResult" class="cl.bennu.ibatislabs.commons.dto.ClientDTO">
+        <result property="id" column="CLNT_SEQ_CDG"/>
+        <result property="name" column="CLNT_NOMBRE"/>
+    </resultMap>
+
+    <sql id="selectClient">
+      SELECT CLNT_SEQ_CDG
+        , CLNT_NOMBRE
+        FROM CLIENTE
+    </sql>
+
+    <select id="getAllClient" resultMap="clientResult" >
+        <include refid="selectClient"/>
+    </select>
+
+    <select id="getClientById" parameterClass="java.lang.Long" resultMap="clientResult">
+        <include refid="selectClient"/>
+        WHERE CLNT_SEQ_CDG = #value#
+    </select>
+
+
+    <insert id="insertClient" parameterClass="cl.bennu.ibatislabs.commons.dto.ClientDTO">
+        INSERT INTO CLIENTE (CLNT_NOMBRE)
+        VALUES (#name#)
+        <selectKey keyProperty="id" resultClass="java.lang.Long">
+            select @@IDENTITY
+        </selectKey>
+    </insert>
+
+    <update id="updateClient" parameterClass="cl.bennu.ibatislabs.commons.dto.ClientDTO">
+        UPDATE CLIENTE
+        SET CLNT_NOMBRE = #name#
+        WHERE CLNT_SEQ_CDG = #id#
+    </update>
+
+    <delete id="deleteClient" parameterClass="java.lang.Long">
+        DELETE FROM CLIENTE
+        WHERE CLNT_SEQ_CDG = #value#
+    </delete>
+
+</sqlMap>

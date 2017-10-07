@@ -1,0 +1,36 @@
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN"
+        "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+
+    <settings useStatementNamespaces="false"/>
+
+    <typeHandler javaType="cl.bennu.ibatislabs.commons.enums.ProductTypeEnum" callback="cl.bennu.ibatislabs.persistence.handler.ProductTypeEnumHandler"/>
+
+    <transactionManager type="JDBC" commitRequired="true">
+        <dataSource type="SIMPLE">
+            <property name="JDBC.Driver" value="com.microsoft.jdbc.sqlserver.SQLServerDriver"/>
+            <property name="JDBC.ConnectionURL" value="jdbc:sqlserver://localhost;databaseName=SMHE"/>
+            <property name="JDBC.Username" value="sa"/>
+            <property name="JDBC.Password" value="11042."/>
+            <property name="JDBC.DefaultAutoCommit" value="true"/>
+        </dataSource>
+    </transactionManager>
+    <!--
+
+    <transactionManager type="EXTERNAL">
+        <property name="DefaultAutoCommit" value="false"/>
+        <property name="SetAutoCommitAllowed" value="false"/>
+        <dataSource type="JNDI">
+            <property name="DataSource" value="java:/ibatis-labs-ds"/>
+        </dataSource>
+    </transactionManager>
+
+  -->
+
+
+
+    <sqlMap resource="cl/bennu/ibatislabs/persistence/mapper/client.xml"/>
+    <sqlMap resource="cl/bennu/ibatislabs/persistence/mapper/product.xml"/>
+
+
+</sqlMapConfig>

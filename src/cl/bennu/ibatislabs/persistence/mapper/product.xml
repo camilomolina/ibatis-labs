@@ -1,0 +1,43 @@
+<!DOCTYPE sqlMap PUBLIC
+        "-//iBATIS.com//DTD SQL Map 2.0//EN"
+        "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Product">
+
+    <resultMap id="productResult" class="cl.bennu.ibatislabs.commons.dto.ProductDTO">
+        <result property="id" column="MUTU_SEQ_CDG"/>
+        <result property="name" column="MUTU_CODIGO" />
+    </resultMap>
+
+    <sql id="selectProduct">
+       SELECT MUTU_SEQ_CDG
+          , MUTU_CODIGO
+        FROM MUTUO
+    </sql>
+
+    <select id="getAllProduct" resultMap="productResult" parameterClass="cl.bennu.ibatislabs.commons.dto.ProductDTO">
+        <include refid="selectProduct"/>
+    </select>
+
+    <select id="getProductById" resultMap="productResult" parameterClass="java.lang.Long">
+        <include refid="selectProduct"/>
+        WHERE MUTU_SEQ_CDG = #id#
+    </select>
+
+    <insert id="insertProduct" parameterClass="cl.bennu.ibatislabs.commons.dto.ProductDTO">
+         INSERT INTO MUTUO (MUTU_SEQ_CDG, MUTU_CODIGO)
+         VALUES (#id#, #name#);
+     </insert>
+
+    <delete id="deleteProduct" parameterClass="java.lang.Long">
+        DELETE FROM MUTUO
+        WHERE MUTU_SEQ_CDG = #id#
+    </delete>
+
+    <update id="updateProduct" parameterClass="cl.bennu.ibatislabs.commons.dto.ProductDTO">
+        UPDATE MUTUO
+        SET MUTU_CODIGO = #name#
+        WHERE MUTU_SEQ_CDG = #id#
+    </update>
+
+</sqlMap>

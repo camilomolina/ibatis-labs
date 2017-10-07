@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="jar" name="ibatis-labs">
+
+
+    <property environment="env"/>
+
+    <path id="project.class.path">
+        <pathelement location="lib/commons-codec-1.5.jar"/>
+        <pathelement location="lib/commons-beanutils-1.8.0.jar"/>
+        <pathelement location="lib/commons-collections-3.2.1.jar"/>
+        <pathelement location="lib/commons-email-1.2.jar"/>
+        <pathelement location="lib/commons-io-1.1.jar"/>
+        <pathelement location="lib/commons-lang-2.3.jar"/>
+        <pathelement location="lib/log4j-1.2.13.jar"/>
+        <pathelement location="lib/hsqldb.jar"/>
+        <pathelement location="lib/ibatis-common-2.jar"/>
+        <pathelement location="lib/ibatis-dao-2.jar"/>
+        <pathelement location="lib/ibatis-sqlmap-2.jar"/>
+        <pathelement location="lib/jtds-1.2.5.jar"/>
+        <pathelement location="lib/msbase.jar"/>
+        <pathelement location="lib/mssqlserver.jar"/>
+        <pathelement location="lib/msutil.jar"/>
+    </path>
+
+    <target name="init">
+        <mkdir dir="build"/>
+        <delete failonerror="false" includeemptydirs="true" file="build/ibatis-labs.jar"/>
+    </target>
+
+    <target name="javac" depends="init">
+        <echo message="Compilando..."/>
+
+        <javac srcdir="src" destdir="build" classpathref="project.class.path" debug="yes">
+            <classpath path="build"/>
+        </javac>
+
+        <echo message="Preparando JAR"/>
+
+        <copy todir="build">
+            <fileset dir="src" includes="**/*.properties"/>
+            <fileset dir="src" includes="**/*.xml"/>
+            <fileset dir="src" includes="**/*.vm"/>
+        </copy>
+    </target>
+
+    <target name="jar" depends="javac">
+        <echo message="Generando JAR"/>
+
+        <jar compress="false" destfile="build/ibatis-labs.jar" basedir="build" />
+    </target>
+
+    <target name="clean">
+        <delete failonerror="false" includeemptydirs="true">
+            <fileset dir="build/"/>
+        </delete>
+    </target>
+
+    <target name="javadoc" description="Crea Javadoc API">
+        <mkdir dir="build/javadoc"/>
+        <javadoc sourcepath="src" destdir="build/javadoc" packagenames="*" classpathref="project.class.path"/>
+    </target>
+
+
+</project>
